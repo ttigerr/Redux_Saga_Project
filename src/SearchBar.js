@@ -44,16 +44,12 @@ const SearchBarResult = ({data}) =>
                 <input
                     type="text"
                     className="searchBar"
-                    placeholder="Search by keyword"
+                    placeholder="Enter the subjects"
                     value={wordEntered}
                     onChange={handleFilter}
                 />
                 <div className="searchIcon">
-                    {filteredData.length === 0 ? (
-                        <SearchIcon />
-                    ) : (
-                        <CloseIcon id="clearBtn" onClick={clearInput} />
-                    )}
+                    <button className="searchButton">Search</button>
                 </div>
             </div>
 

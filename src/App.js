@@ -6,7 +6,7 @@ function App() {
   return (
     <main className="app">
       <div className="content">
-        <h1>Hello</h1>
+        <h1>WELCOME USER</h1>
         <SearchBarResult />
       </div>
       
