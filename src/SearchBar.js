@@ -1,62 +1,64 @@
 import React, { useState } from 'react'
-import SearchIcon from '@material-ui/icons/Search'
-import CloseIcon from '@material-ui/icons/Close'
-//import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { getItemsSuccess } from './actions';
 
-
-const SearchBarResult = ({data}) => 
+const SearchBarResult = () => 
 {
-    const [filteredData, setFilteredData] = useState([])
-    const [wordEntered, setWordEntered] = useState('')
 
+    const [searchInput, setSearchInput] = useState('')
+    
     // Handle with the user's input in textfield
     const handleFilter = (event) => 
     {
-
         // User's inputs
-        const searchWord = event.target.value
-        setWordEntered(searchWord)
+        const userSearchInput = event.target.value
+        setSearchInput(userSearchInput)
 
-        // Find the matches with both lower and upper case letter
-        const newFilter = data.filter((value) => {
-          return value.title.toLowerCase().includes(searchWord.toLowerCase())
-        })
+        // // Find the matches with both lower and upper case letter
+        // const newFilter = data.filter((value) => {
+        //   return value.title.toLowerCase().includes(userSearchInput.toLowerCase())
+        // })
     
-        // if user types nothing
-        if (searchWord === '') {
-          setFilteredData([])
-        } else {
-          setFilteredData(newFilter)
-        }
+        // // if user types nothing
+        // if (userSearchInput === '') {
+        //   setFilteredData([])
+        // } else {
+        //   setFilteredData(newFilter)
+        // }
+    }
+
+    // Set the action inside the search button
+    const handleClick = () => {
+      console.log(searchInput)
     }
 
     // Clear the inputs 
-    const clearInput = () => 
-    {
-        setFilteredData([])
-        setWordEntered('')
-    }
+    // const clearInput = () => 
+    // {
+    //     setFilteredData([])
+    //     setSearchInput('')
+    // }
 
     return (
-        <>
-            {/* Search bar */}
-            <div className="search">
+    
+        <div className="search">
+            <div className="searchInputs">
                 <input
-                    type="text"
-                    className="searchBar"
-                    placeholder="Enter the subjects"
-                    value={wordEntered}
-                    onChange={handleFilter}
+                type="text"
+                placeholder="Enter the project name"
+                value={searchInput}
+                onChange={handleFilter}
                 />
-                <div className="searchIcon">
-                    <button className="searchButton">Search</button>
-                </div>
+                <button className="searchButton" onClick={handleClick}>Search</button>
             </div>
+            {/* show the result */}
+            {/* <div className="dataResult">
 
-            {/* show the keywords  */}
-            
-        </>
-    )
+            </div> */}
+        </div>
+
+       
+      );
 }
 
 export default SearchBarResult
