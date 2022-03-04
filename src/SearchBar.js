@@ -4,7 +4,7 @@ import { getItemsSuccess } from './actions';
 
 const SearchBarResult = () => 
 {
-
+    const dispatch = useDispatch();
     const [searchInput, setSearchInput] = useState('')
     
     // Handle with the user's input in textfield
