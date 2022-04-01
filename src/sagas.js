@@ -4,14 +4,6 @@ import axios from 'axios';
 
 
 // GET request from github API
-// async function itemRequestApi() 
-// {
-//     const response = await fetch('https://api.github.com/search/repositories?q=subject');
-//     return await response.json();
-
-//     console.log(response)
-// }
-
 const loadPoem = () => {
     fetch('https://api.github.com/search/repositories?q=subject',
       {
@@ -24,7 +16,6 @@ const loadPoem = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data)
-        // setPoem(data)
       })
       .catch((error) => console.log(error))
 } 

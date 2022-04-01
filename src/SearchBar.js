@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getItemsSuccess } from './actions';
 import { getItemsFetch } from './actions';
@@ -11,7 +11,16 @@ const SearchBarResult = () =>
     const [name, setName] = useState('');
     const [stargazerCounts, setStargazerCount] = useState('');
     const [watcherCounts, setWatcherCounts] = useState('');
-    const [repos, setRepos] = useState([]);
+    const [repos, setRepos] = useState('');
+    const [listData, setListData] = useState();
+
+  const array = [dispatch(getItemsFetch())];
+    
+    // useEffect(() => {
+    //   if(!listData) {
+    //     setListData(handleFilter(""))
+    //   }
+    // }, [listData])
     
     // Handle with the user's input in textfield
     const handleFilter = (event) => 
@@ -19,29 +28,31 @@ const SearchBarResult = () =>
         // User's inputs
         const userSearchInput = event.target.value
         setSearchInput(userSearchInput)
-
-        // // Find the matches with both lower and upper case letter
-        // const newFilter = data.filter((value) => {
-        //   return value.title.toLowerCase().includes(userSearchInput.toLowerCase())
-        // })
-    
-        // // if user types nothing
-        // if (userSearchInput === '') {
-        //   setFilteredData([])
-        // } else {
-        //   setFilteredData(newFilter)
-        // }
+        let arr = array.filter((item) => {
+          const itemChars = item.toLowerCase();
+          const matched = item.indexOf(event.toLowerCase());
+          if(itemChars.indexOf(event.toLowerCase()) > -1) {
+            return item
+          }
+        });
+        return arr;
     }
 
     // Set the action inside the search button
     const handleClick = () => {
       const result = dispatch(getItemsFetch());
       setRepos(result);
-      console.log("This is a result", result)
-      // .then((data) => {
-      //   setData(data)
-      // })
-      // console.log(searchInput)
+    }
+
+    const Lists = (props) => {
+      if (props.data) {
+        const Items = props.data.map((item) => {
+          return <li>{item.name}</li>;
+        });
+        return <ul>{Items}</ul>;
+      } else {
+        return <p>empty list</p>;
+      }
     }
 
     const setData = ({name, stargazerCounts, watcherCounts}) => {
@@ -50,31 +61,27 @@ const SearchBarResult = () =>
       setWatcherCounts(watcherCounts)
     }
 
-    // Clear the inputs 
-    // const clearInput = () => 
-    // {
-    //     setFilteredData([])
-    //     setSearchInput('')
-    // }
-
     return (
       <div>
-        <div className="search">
-            <div className="searchInputs">
-                <input
-                type="text"
-                placeholder="Enter the project name"
-                value={searchInput}
-                onChange={handleFilter}
-                />
-                <button className="searchButton" onClick={handleClick}>Search</button>
-            </div>
-        </div>
-        <div className="itemCards">
-          <h2>{name}</h2>
+          <form>
+            <div className="search">
+              <div className="searchInputs">
+                  <input
+                  type="text"
+                  placeholder="Enter the project name"
+                  value={searchInput}
+                  onChange={handleFilter}
+                  />
+                  <button className="searchButton" onClick={handleClick}>Search</button>
+              </div>
+          </div>
+        </form>
+        {/* <div className="itemCards">
+          <h2></h2>
           <h4>Stargazers count: {stargazerCounts}</h4>
           <h4>Watchers count: {watcherCounts}</h4>
-        </div>
+        </div> */}
+        <Lists data={items}/>
       </div>
     );
 }
