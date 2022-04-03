@@ -16,11 +16,12 @@ const SearchBarResult = () =>
 
   const array = [dispatch(getItemsFetch())];
     
-    // useEffect(() => {
-    //   if(!listData) {
-    //     setListData(handleFilter(""))
-    //   }
-    // }, [listData])
+  // it seemed not working
+    useEffect(() => {
+      if(!listData) {
+        setListData(handleFilter(""))
+      }
+    }, [listData])
     
     // Handle with the user's input in textfield
     const handleFilter = (event) => 
@@ -30,7 +31,7 @@ const SearchBarResult = () =>
         setSearchInput(userSearchInput)
         let arr = array.filter((item) => {
           const itemChars = item.toLowerCase();
-          const matched = item.indexOf(event.toLowerCase());
+          // const matched = item.indexOf(event.toLowerCase());
           if(itemChars.indexOf(event.toLowerCase()) > -1) {
             return item
           }
@@ -40,8 +41,9 @@ const SearchBarResult = () =>
 
     // Set the action inside the search button
     const handleClick = () => {
-      const result = dispatch(getItemsFetch());
-      setRepos(result);
+      let arr = handleFilter()
+      // const result = dispatch(getItemsFetch());
+      setListData(arr);
     }
 
     const Lists = (props) => {
@@ -64,7 +66,7 @@ const SearchBarResult = () =>
     return (
       <div>
           <form>
-            <div className="search">
+            <div className="search" >
               <div className="searchInputs">
                   <input
                   type="text"
@@ -81,7 +83,7 @@ const SearchBarResult = () =>
           <h4>Stargazers count: {stargazerCounts}</h4>
           <h4>Watchers count: {watcherCounts}</h4>
         </div> */}
-        <Lists data={items}/>
+        <Lists data={listData}/>
       </div>
     );
 }
