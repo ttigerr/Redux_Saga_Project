@@ -17,11 +17,11 @@ const SearchBarResult = () =>
   const array = [dispatch(getItemsFetch())];
     
   // it seemed not working
-    useEffect(() => {
-      if(!listData) {
-        setListData(handleFilter(""))
-      }
-    }, [listData])
+    // useEffect(() => {
+    //   if(!listData) {
+    //     setListData(handleFilter(""))
+    //   }
+    // }, [listData])
     
     // Handle with the user's input in textfield
     const handleFilter = (event) => 
